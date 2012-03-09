@@ -1,6 +1,7 @@
 package nb.robot;
 
 import lejos.nxt.Button;
+import lejos.nxt.Sound;
 import lejos.robotics.subsumption.Behavior;
 
 public class DeactivateVotingBehavior implements Behavior {
@@ -12,6 +13,7 @@ public class DeactivateVotingBehavior implements Behavior {
 
   @Override
   public void action() {
+    Sound.beepSequence();
     votingBehavior.setActive(false);
   }
 

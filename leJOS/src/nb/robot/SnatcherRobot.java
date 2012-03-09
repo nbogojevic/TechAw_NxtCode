@@ -11,6 +11,7 @@ import lejos.robotics.ColorDetector;
 import lejos.robotics.navigation.DifferentialPilot;
 
 public class SnatcherRobot extends DifferentialPilot implements ColorDetector {
+  private static final int ALREADY_CLOSE = 20;
   private static final int ARM_SPEED = 180;
   private static final int RELEASE_ANGLE = 400;
   
@@ -28,7 +29,7 @@ public class SnatcherRobot extends DifferentialPilot implements ColorDetector {
   private int closestTargetDistance;
   
   public SnatcherRobot() {
-    super(3.6f, 16.4f, Motor.C, Motor.B);
+    super(3.6f, 16.8f, Motor.C, Motor.B);
     setRotateSpeed(ROTATE_SPEED);
     setTravelSpeed(MOVEMENT_SPEED);
     armMotor.setSpeed(ARM_SPEED);
@@ -45,22 +46,30 @@ public class SnatcherRobot extends DifferentialPilot implements ColorDetector {
     armMotor.rotate(-RELEASE_ANGLE);      
   }
   
-  public void findObject() {
-    double angleOfTarget = scanForObject();
+  public void findObject(Suppressor suppressor) {
+    double angleOfTarget = scanForObject(suppressor);
     rotate(-angleOfTarget);
   }
 
-  private double scanForObject() {
-    closestTargetDistance = 256;
+  private double scanForObject(Suppressor suppressor) {
+    closestTargetDistance = distanceSensor.getDistance();
+    if (closestTargetDistance < ALREADY_CLOSE) {
+      System.out.println(closestTargetDistance);
+      System.out.println(closestTargetDistance);
+      System.out.println(closestTargetDistance);
+      System.out.println(closestTargetDistance);
+      return 0;
+    }
     reset();
     rotate(FULL_CIRCLE, true);
     double angleOfTarget = 0;
-    while (isMoving()) {
+    while (isMoving() && (suppressor == null || !suppressor.isSupressed())) {
       int measuredDistance = distanceSensor.getDistance();
       if (measuredDistance < closestTargetDistance) {
         closestTargetDistance = measuredDistance;
         angleOfTarget = getMovement().getAngleTurned();
       }
+      Thread.yield();
     }
     angleOfTarget = getMovement().getAngleTurned()-angleOfTarget;
     stop();
@@ -68,7 +77,9 @@ public class SnatcherRobot extends DifferentialPilot implements ColorDetector {
   }
 
   public void moveCloser() {
-    travel(closestTargetDistance*0.75);
+    if (closestTargetDistance >= ALREADY_CLOSE) {
+      travel(closestTargetDistance*0.75);
+    }
   }
 
   public void backtrack() {

@@ -9,6 +9,7 @@ public class CancelProgramBehavior implements Behavior {
 
   @Override
   public void action() {
+    System.exit(0);
   }
 
   @Override

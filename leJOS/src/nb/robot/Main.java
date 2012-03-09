@@ -1,5 +1,6 @@
 package nb.robot;
 
+import lejos.nxt.Button;
 import lejos.robotics.subsumption.Arbitrator;
 import lejos.robotics.subsumption.Behavior;
 
@@ -15,6 +16,7 @@ public class Main {
     ActivateVotingBehavior activator = new ActivateVotingBehavior(voting);
     DeactivateVotingBehavior deactivator = new DeactivateVotingBehavior(voting);
     CancelProgramBehavior cancelProgram = new CancelProgramBehavior();
+    Button.ENTER.waitForPressAndRelease();
     Behavior [] bArray = {snatcher,
 //        votingBehavior,
         activator, 
