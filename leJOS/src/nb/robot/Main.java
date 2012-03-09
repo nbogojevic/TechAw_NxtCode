@@ -9,12 +9,19 @@ public class Main {
    * @param args
    */
   public static void main(String[] args) {
-    SnatcherRobot snatcher = new SnatcherRobot();
-    SnatcherBehavior snatcherBehavior = new SnatcherBehavior(snatcher);
-    Behavior [] bArray = {snatcherBehavior};
+    SnatcherRobot robot = new SnatcherRobot();
+    SnatcherBehavior snatcher = new SnatcherBehavior(robot);
+    VotingBehavior voting = new VotingBehavior(robot);
+    ActivateVotingBehavior activator = new ActivateVotingBehavior(voting);
+    DeactivateVotingBehavior deactivator = new DeactivateVotingBehavior(voting);
+    CancelProgramBehavior cancelProgram = new CancelProgramBehavior();
+    Behavior [] bArray = {snatcher,
+//        votingBehavior,
+        activator, 
+        deactivator,
+        cancelProgram};
     Arbitrator arbitrator = new Arbitrator(bArray);
     arbitrator.start();
-//    Button.ESCAPE.waitForPressAndRelease();
   }
 }
 
