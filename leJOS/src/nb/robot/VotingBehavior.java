@@ -6,6 +6,7 @@ import lejos.robotics.subsumption.Behavior;
 public class VotingBehavior implements Behavior {
   private SnatcherRobot robot;
   private ColorReader colorReader;
+  private boolean active;
   
   public VotingBehavior(SnatcherRobot robot) {
     this.robot = robot;
@@ -32,6 +33,14 @@ public class VotingBehavior implements Behavior {
 
   @Override
   public boolean takeControl() {
-    return robot.getColorID() != Color.BLACK;
+    return active && robot.getColorID() != Color.BLACK;
+  }
+
+  public boolean isActive() {
+    return active;
+  }
+
+  public void setActive(boolean active) {
+    this.active = active;
   }
 }
