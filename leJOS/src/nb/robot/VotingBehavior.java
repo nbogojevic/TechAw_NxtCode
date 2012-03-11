@@ -1,6 +1,5 @@
 package nb.robot;
 
-import lejos.nxt.LCD;
 import lejos.robotics.subsumption.Behavior;
 
 public class VotingBehavior implements Behavior {
@@ -21,11 +20,8 @@ public class VotingBehavior implements Behavior {
       if (action != null) {
         robot.perform(action);
       }
-      else {
-        LCD.drawString("NULL", 0, 3);
-      }
-      Thread.sleep(1000);
-    } catch (InterruptedException e) {
+      Thread.yield();
+    } catch (Exception e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }    

@@ -17,10 +17,10 @@ public class SnatcherRobot extends DifferentialPilot implements ColorDetector, L
   private static final int RELEASE_ANGLE = 400;
   
   private static final int FULL_CIRCLE = 360;
-  private static final int ROTATE_SPEED = 50;
+  private static final double ROTATE_SPEED = 50;
   private static final int MOVEMENT_SPEED = 10;
   private static final int BACKTRACK_DISTANCE = 20;
-  private static final double SLOW_ROTATE_SPEED = 15;
+  private static final double SLOW_ROTATE_SPEED = 25;
   
   private TouchSensor armLimiterTouchSensor = new TouchSensor(SensorPort.S1);
   private UltrasonicSensor distanceSensor = new UltrasonicSensor(SensorPort.S4);
@@ -36,14 +36,14 @@ public class SnatcherRobot extends DifferentialPilot implements ColorDetector, L
   }
 
   public void standardSpeed() {
-    setRotateSpeed(ROTATE_SPEED);
     setTravelSpeed(MOVEMENT_SPEED);
+    setRotateSpeed(ROTATE_SPEED);
     armMotor.setSpeed(ARM_SPEED);
   }
      
   public void slowSpeed() {
-    setRotateSpeed(SLOW_ROTATE_SPEED);
     setTravelSpeed(MOVEMENT_SPEED);
+    setRotateSpeed(SLOW_ROTATE_SPEED);
     armMotor.setSpeed(ARM_SPEED);
   }
      
