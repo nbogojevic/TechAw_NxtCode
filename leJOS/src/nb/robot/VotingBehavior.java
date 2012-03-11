@@ -9,7 +9,7 @@ public class VotingBehavior implements Behavior {
   
   public VotingBehavior(SnatcherRobot robot) {
     this.robot = robot;
-    colorReader = new LightReader(robot.colorReader);
+    colorReader = new LightReader(robot);
   }
 
   @Override

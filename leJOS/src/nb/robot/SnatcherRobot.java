@@ -24,7 +24,7 @@ public class SnatcherRobot extends DifferentialPilot implements ColorDetector, L
   
   private TouchSensor armLimiterTouchSensor = new TouchSensor(SensorPort.S1);
   private UltrasonicSensor distanceSensor = new UltrasonicSensor(SensorPort.S4);
-  ColorSensor colorReader = new ColorSensor(SensorPort.S3,Color.BLUE);
+  private ColorSensor colorReader = new ColorSensor(SensorPort.S3,Color.BLUE);
 
   private NXTRegulatedMotor armMotor = Motor.A;
   
