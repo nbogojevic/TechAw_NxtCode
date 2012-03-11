@@ -1,10 +1,7 @@
 package nb.robot;
 
 import lejos.nxt.Button;
-import lejos.nxt.ColorSensor;
 import lejos.nxt.LCD;
-import lejos.nxt.SensorPort;
-import lejos.robotics.Color;
 import lejos.robotics.subsumption.Arbitrator;
 import lejos.robotics.subsumption.Behavior;
 

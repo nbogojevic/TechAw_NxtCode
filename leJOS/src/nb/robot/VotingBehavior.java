@@ -4,7 +4,6 @@ import lejos.nxt.LCD;
 import lejos.robotics.subsumption.Behavior;
 
 public class VotingBehavior implements Behavior {
-  private static final double SLOW_ROTATE = 15d;
   private SnatcherRobot robot;
   private LightReader colorReader;
   private boolean active;
