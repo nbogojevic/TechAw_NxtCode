@@ -8,21 +8,23 @@ import lejos.nxt.TouchSensor;
 import lejos.nxt.UltrasonicSensor;
 import lejos.robotics.Color;
 import lejos.robotics.ColorDetector;
+import lejos.robotics.LightDetector;
 import lejos.robotics.navigation.DifferentialPilot;
 
-public class SnatcherRobot extends DifferentialPilot implements ColorDetector {
+public class SnatcherRobot extends DifferentialPilot implements ColorDetector, LightDetector {
   private static final int ALREADY_CLOSE = 20;
   private static final int ARM_SPEED = 180;
   private static final int RELEASE_ANGLE = 400;
   
   private static final int FULL_CIRCLE = 360;
-  private static final int ROTATE_SPEED = 70;
+  private static final int ROTATE_SPEED = 50;
   private static final int MOVEMENT_SPEED = 10;
   private static final int BACKTRACK_DISTANCE = 20;
+  private static final double SLOW_ROTATE_SPEED = 15;
   
   private TouchSensor armLimiterTouchSensor = new TouchSensor(SensorPort.S1);
   private UltrasonicSensor distanceSensor = new UltrasonicSensor(SensorPort.S4);
-  private ColorSensor colorReader = new ColorSensor(SensorPort.S3);  
+  ColorSensor colorReader = new ColorSensor(SensorPort.S3,Color.BLUE);
 
   private NXTRegulatedMotor armMotor = Motor.A;
   
@@ -30,7 +32,17 @@ public class SnatcherRobot extends DifferentialPilot implements ColorDetector {
   
   public SnatcherRobot() {
     super(3.6f, 16.8f, Motor.C, Motor.B);
+    standardSpeed();
+  }
+
+  public void standardSpeed() {
     setRotateSpeed(ROTATE_SPEED);
+    setTravelSpeed(MOVEMENT_SPEED);
+    armMotor.setSpeed(ARM_SPEED);
+  }
+     
+  public void slowSpeed() {
+    setRotateSpeed(SLOW_ROTATE_SPEED);
     setTravelSpeed(MOVEMENT_SPEED);
     armMotor.setSpeed(ARM_SPEED);
   }
@@ -118,10 +130,34 @@ public class SnatcherRobot extends DifferentialPilot implements ColorDetector {
       rotateRight();
       break;
     case grab:
+      grab();
       break;
     case drop:
+      release();
+      break;
+    default:
+      System.out.println("Nothing");
       break;
     }
   }
-  
+
+  @Override
+  public int getHigh() {
+    return colorReader.getHigh();
+  }
+
+  @Override
+  public int getLightValue() {
+    return colorReader.getLightValue();
+  }
+
+  @Override
+  public int getLow() {
+    return colorReader.getLow();
+  }
+
+  @Override
+  public int getNormalizedLightValue() {
+    return colorReader.getNormalizedLightValue();
+  }
 }

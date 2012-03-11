@@ -2,20 +2,22 @@ package nb.robot;
 
 import java.util.ArrayList;
 
+import nb.robot.commands.PilotCommandFactory;
+
 import lejos.robotics.subsumption.Behavior;
 
 public class SnatcherBehavior implements Behavior, Suppressor {
-
   private boolean suppress;
   private SnatcherRobot snatcher;
   private ArrayList<Runnable> actions;
+  private PilotCommandFactory commandFactory;
 
   public SnatcherBehavior(SnatcherRobot snatcher) {
     super();
     this.snatcher = snatcher;
+    commandFactory = new PilotCommandFactory(snatcher);
     actions = new ArrayList<Runnable>();
     initActions();
-    
   }
 
   private void initActions() {
@@ -37,15 +39,6 @@ public class SnatcherBehavior implements Behavior, Suppressor {
     Runnable advance = new Runnable() {      
       public void run() { snatcher.advance(); }
     };
-    Runnable left = new Runnable() {      
-      public void run() { snatcher.rotate(90); }
-    };
-    Runnable turnBack = new Runnable() {      
-      public void run() { snatcher.rotate(180); }
-    };
-    Runnable goForward60cm = new Runnable() {      
-      public void run() { snatcher.travel(60); }
-    };
     actions.add(grab);
     actions.add(findObject);
     actions.add(moveCloser);
@@ -55,16 +48,13 @@ public class SnatcherBehavior implements Behavior, Suppressor {
     actions.add(release);
     actions.add(advance);
     actions.add(grab);
-    actions.add(turnBack);
-    actions.add(goForward60cm);
+    actions.add(commandFactory.turnBack());
+    actions.add(commandFactory.travel(60));
     actions.add(release);
     actions.add(backtrack);
-    actions.add(turnBack);
-    actions.add(advance);
-    actions.add(left);
-    actions.add(advance);
-    actions.add(left);
-    actions.add(goForward60cm);
+    actions.add(grab);
+    actions.add(commandFactory.turnBack());
+    actions.add(commandFactory.travel(90));
   }
 
   @Override

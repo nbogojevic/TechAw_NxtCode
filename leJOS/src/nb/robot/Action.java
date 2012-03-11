@@ -2,12 +2,10 @@ package nb.robot;
 
 import static nb.robot.Tokens.*;
 
-enum Action { 
+public enum Action { 
   stop(STOP_TOKENS), forward(FORWARD_TOKENS), reverse(REVERSE_TOKENS), 
-  left(LEFT_TOKENS), right(RIGHT_TOKENS), grab(GRAB_TOKENS), drop(DROP_TOKENS), 
-  quit(QUIT_TOKENS);
-  
-  
+  left(LEFT_TOKENS), right(RIGHT_TOKENS), grab(GRAB_TOKENS), drop(DROP_TOKENS);
+    
   private int []tokens;
   
   private Action(int[] tokens) {
@@ -26,7 +24,5 @@ enum Action {
       return true;
     }
     return false;
-  }
-  
-  
+  }  
 }
